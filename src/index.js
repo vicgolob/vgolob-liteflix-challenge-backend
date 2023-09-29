@@ -1,10 +1,16 @@
 const express = require("express");
+const multer = require("multer");
 
 const { sequelize } = require("./models");
 const router = require("./routes/index");
 
 const app = express();
 const port = process.env.PORT ?? 5000;
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+app.use(upload.single("file"));
 
 app.get("/", (req, res) => {
 	res.send("Hello World!");
